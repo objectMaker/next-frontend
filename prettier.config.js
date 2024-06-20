@@ -4,4 +4,5 @@ module.exports = {
   ...styleguide,
   plugins: [...styleguide.plugins, 'prettier-plugin-tailwindcss'],
   noVar: 'error',
+  endOfLine: 'auto',
 };
