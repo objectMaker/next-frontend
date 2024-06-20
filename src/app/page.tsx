@@ -1,5 +1,8 @@
 export default function Home() {
-  return <>
-  <div>i am home</div>
-  </>
+  const a = 1;
+  return (
+    <>
+      <div>i am home</div>
+    </>
+  );
 }
