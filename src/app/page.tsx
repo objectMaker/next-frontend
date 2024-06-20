@@ -1,8 +1,10 @@
+import Button from '@mui/material/Button';
+import Link from 'next/link';
+
 export default function Home() {
-  const a = 1;
   return (
-    <>
-      <div>i am home</div>
-    </>
+    <Link href="/gnm">
+      <Button variant="contained">go gnm</Button>
+    </Link>
   );
 }
