@@ -1,7 +1,7 @@
-export default function NewPage() {
+export default function Gnm() {
   return (
     <>
-      <div className="h-12 bg-red-500">new page</div>
+      <div>gnm</div>
     </>
   );
 }
