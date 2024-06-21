@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 
 export default function Nav() {
@@ -5,7 +6,13 @@ export default function Nav() {
     <>
       <div className="flex w-full flex-row justify-between">
         <div>start</div>
-        <Button>i am button</Button>
+        <Button
+          onClick={() => {
+            alert('i am button');
+          }}
+        >
+          i am button
+        </Button>
       </div>
     </>
   );
