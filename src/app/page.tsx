@@ -10,6 +10,9 @@ export default function Home() {
       <Link href="/gnm">
         <Button variant="contained">go gnm</Button>
       </Link>
+      <Link href="/needLoading">
+        <Button variant="contained">go loading page</Button>
+      </Link>
     </>
   );
 }
