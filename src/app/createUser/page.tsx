@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import fetchWithUrl from '@/lib/fetchWithUrl';
 import { useState } from 'react';
 
 export default function CreateUser() {
@@ -10,7 +11,7 @@ export default function CreateUser() {
       alert('Please enter a username');
       return;
     }
-    const fetchRes = await fetch('http://localhost:8080/createUser', {
+    const res = await fetchWithUrl('/createUser', {
       method: 'POST',
       mode: 'cors',
       cache: 'default',
@@ -18,7 +19,6 @@ export default function CreateUser() {
         Name: inputValue,
       }),
     });
-    const res = await fetchRes.json();
     console.log('🚀 ~ handleCreateUser ~ res:', res);
   }
   return (
