@@ -1,8 +1,11 @@
+import fetchWithUrl from '@/lib/fetchWithUrl';
+
 export default async function Home() {
-  const res = await fetch('http://127.0.0.1:8080/getUserList', {
+  const userListInfo = await await fetchWithUrl<{
+    body: { Name: string; ID: string }[];
+  }>('/getUserList', {
     cache: 'no-store',
   });
-  const userListInfo = await res.json();
   return (
     <>
       {userListInfo?.body?.map(function (item: { Name: string; ID: string }) {
