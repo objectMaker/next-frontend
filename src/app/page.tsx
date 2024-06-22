@@ -1,5 +1,7 @@
 export default async function Home() {
-  const res = await fetch('http://localhost:8080/getUserList');
+  const res = await fetch('http://127.0.0.1:8080/getUserList', {
+    cache: 'no-store',
+  });
   const userListInfo = await res.json();
   return (
     <>
