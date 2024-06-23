@@ -7,5 +7,9 @@ export default async function fetchWithUrl<T extends object>(
     process.env.NEXT_PUBLIC_BASE_URL + requestPath,
     initParams,
   );
-  return await res.json();
+  if (res.ok) {
+    return await res.json();
+  } else {
+    throw new Error(JSON.stringify(await res.json()));
+  }
 }
