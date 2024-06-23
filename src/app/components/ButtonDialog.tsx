@@ -19,7 +19,7 @@ export default function DialogDemo(props: EditType) {
     setOpen(false);
   };
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <Button variant="outline" onClick={() => setOpen(true)}>
         {props.title}
       </Button>
