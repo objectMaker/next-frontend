@@ -2,7 +2,7 @@ import fetchWithUrl from '@/lib/fetchWithUrl';
 import ButtonDialog from './components/ButtonDialog';
 export default async function Home() {
   const userListInfo = await await fetchWithUrl<{
-    body: { name: string; id: string }[];
+    body: { username: string; id: string }[];
   }>('/getUserList', {
     cache: 'no-store',
   });
@@ -14,7 +14,7 @@ export default async function Home() {
       {userListInfo?.body?.map(function (item) {
         return (
           <div key={item.id}>
-            id : {item.id} name : {item.name}
+            id : {item.id} name : {item.username}
           </div>
         );
       })}

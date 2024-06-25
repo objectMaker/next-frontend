@@ -45,7 +45,7 @@ export default function InputForm(props: Props) {
         mode: 'cors',
         cache: 'default',
         body: JSON.stringify({
-          name: data.username,
+          username: data.username,
         }),
       });
       toast({
@@ -80,7 +80,7 @@ export default function InputForm(props: Props) {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>username</FormLabel>
                 <FormControl>
                   <Input placeholder="username" {...field} />
                 </FormControl>
