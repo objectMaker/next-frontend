@@ -1,11 +1,13 @@
+import { unstable_noStore as noStore } from 'next/cache';
+
 import fetchWithUrl from '@/lib/fetchWithUrl';
 import ButtonDialog from './components/ButtonDialog';
+
 export default async function Home() {
+  noStore();
   const userListInfo = await await fetchWithUrl<{
     body: { username: string; id: string }[];
-  }>('/getUserList', {
-    cache: 'no-store',
-  });
+  }>('/getUserList');
   return (
     <>
       <div className="flex flex-row justify-end p-2 pr-4">
