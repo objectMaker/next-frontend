@@ -93,12 +93,12 @@ export default function SignUpForm() {
             )}
           />
           <Button type="submit" className="h-8 w-full">
-            Submit
+            SIGN UP
           </Button>
         </form>
       </Form>
       <div className="flex flex-row items-center justify-between px-2 text-sm">
-        <div>already have a account?</div>
+        <div>Already have an account?</div>
         <Link href="/signIn">
           <Button variant="link">signIn</Button>
         </Link>

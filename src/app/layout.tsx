@@ -25,7 +25,7 @@ export default function RootLayout({
           'h-full w-full bg-cover bg-center bg-no-repeat',
         )}
         style={{
-          backgroundImage: "url('/house.jpg')",
+          backgroundImage: "url('/simple.jpg')",
         }}
       >
         {children}

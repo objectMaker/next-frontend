@@ -6,7 +6,7 @@ export default function Nav() {
   const a = 0;
   return (
     <>
-      <div className="flex w-full flex-row items-center justify-between bg-[#2221] px-8 py-2 hover:bg-[#2222]">
+      <div className="flex w-full flex-row items-center justify-between bg-[#9991] px-8 py-2 text-white hover:bg-[#9992]">
         {['Mr.YU', 'TODO'].map((item) => (
           <div className="text-xl font-bold" key={item}>
             {item}
