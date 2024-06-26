@@ -17,8 +17,8 @@ export default function Nav() {
             <Button className="h-8">LOGOUT</Button>
           </Link>
         ) : (
-          <Link href="/login">
-            <Button className="h-8">LOGIN</Button>
+          <Link href="/signIn">
+            <Button className="h-8">SIGN IN</Button>
           </Link>
         )}
       </div>
