@@ -1,7 +1,3 @@
 export default function Login() {
-  return (
-    <>
-      <div>i am login</div>
-    </>
-  );
+  return <div className="m-auto w-1/2 text-center">i am login</div>;
 }
