@@ -1,7 +1,6 @@
 import { unstable_noStore as noStore } from 'next/cache';
 
 import ButtonDialog from './components/ButtonDialog';
-import Nav from './(home)/components/Nav';
 // import request from '@/request';
 export default async function Home() {
   noStore();
@@ -10,7 +9,6 @@ export default async function Home() {
   // }>(process.env.NEXT_PUBLIC_BASE_URL + '/getUserList');
   return (
     <>
-      <Nav></Nav>
       <div className="flex flex-row justify-end p-2 pr-4">
         <ButtonDialog title="create user" />
       </div>
