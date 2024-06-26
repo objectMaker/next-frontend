@@ -22,7 +22,11 @@ export default function RootLayout({
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
           fontSans.variable,
+          'h-full w-full bg-cover bg-center bg-no-repeat',
         )}
+        style={{
+          backgroundImage: "url('/house.jpg')",
+        }}
       >
         {children}
         <Toaster />
