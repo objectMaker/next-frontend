@@ -43,8 +43,8 @@ export default function SignInForm() {
     try {
       await fetchWithUrl('/createUser', {
         method: 'POST',
-        mode: 'cors',
         cache: 'default',
+        credentials: 'include',
         body: JSON.stringify({
           username: data.username,
         }),
