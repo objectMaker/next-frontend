@@ -20,15 +20,22 @@ import fetchWithUrl from '@/lib/fetchWithUrl';
 import { ToastAction } from '@/components/ui/toast';
 import Link from 'next/link';
 
-// type Props = {
-//   close: () => void;
-// };
-
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-});
+const FormSchema = z
+  .object({
+    username: z.string().min(2, {
+      message: 'Username must be at least 2 characters.',
+    }),
+    password: z.string().min(6, {
+      message: 'Password must be at least 6 characters.',
+    }),
+    confirmPassword: z.string().min(6, {
+      message: 'Password must be at least 6 characters.',
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'confirmPassword must be equal to password',
+    path: ['confirmPassword'],
+  });
 
 export default function SignUpForm() {
   const { toast } = useToast();
@@ -36,6 +43,8 @@ export default function SignUpForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       username: '',
+      password: '',
+      confirmPassword: '',
     },
   });
 
@@ -87,6 +96,42 @@ export default function SignUpForm() {
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>password</FormLabel>
+                <FormControl>
+                  <Input placeholder="password" type="password" {...field} />
+                </FormControl>
+                <FormDescription>Please enter your password</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>confirmPassword</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="confirmPassword"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Please enter your password again
                 </FormDescription>
                 <FormMessage />
               </FormItem>
