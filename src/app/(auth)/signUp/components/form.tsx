@@ -19,6 +19,8 @@ import { useToast } from '@/components/ui/use-toast';
 import fetchWithUrl from '@/lib/fetchWithUrl';
 import { ToastAction } from '@/components/ui/toast';
 import Link from 'next/link';
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 const FormSchema = z
   .object({
@@ -39,6 +41,7 @@ const FormSchema = z
 
 export default function SignUpForm() {
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -50,6 +53,12 @@ export default function SignUpForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
+      setLoading(true);
+      await new Promise((res) => {
+        setTimeout(() => {
+          res(true);
+        }, 5000);
+      });
       await fetchWithUrl('/createUser', {
         method: 'POST',
         mode: 'cors',
@@ -72,6 +81,8 @@ export default function SignUpForm() {
         description: 'There was a problem with your request.',
         action: <ToastAction altText="Try again"></ToastAction>,
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -137,7 +148,8 @@ export default function SignUpForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="h-8 w-full">
+          <Button disabled={loading} type="submit" className="h-8 w-full">
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             SIGN UP
           </Button>
         </form>
