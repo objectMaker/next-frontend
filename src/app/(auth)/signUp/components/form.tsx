@@ -94,7 +94,7 @@ export default function SignUpForm() {
             form.handleSubmit(onSubmit)(e);
             e.preventDefault();
           }}
-          className="space-y-6"
+          className="space-y-3"
         >
           <FormField
             control={form.control}

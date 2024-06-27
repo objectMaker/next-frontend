@@ -28,6 +28,9 @@ const FormSchema = z.object({
   username: z.string().min(2, {
     message: 'Username must be at least 2 characters.',
   }),
+  password: z.string().min(6, {
+    message: 'Password must be at least 6 characters.',
+  }),
 });
 
 export default function SignInForm() {
@@ -36,17 +39,19 @@ export default function SignInForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       username: '',
+      password: '',
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      await fetchWithUrl('/createUser', {
+      await fetchWithUrl('/signIn', {
         method: 'POST',
         cache: 'default',
         credentials: 'include',
         body: JSON.stringify({
           username: data.username,
+          password: data.password,
         }),
       });
       toast({
@@ -65,7 +70,7 @@ export default function SignInForm() {
       });
     }
   }
-
+  
   return (
     <>
       <Form {...form}>
@@ -74,7 +79,7 @@ export default function SignInForm() {
             form.handleSubmit(onSubmit)(e);
             e.preventDefault();
           }}
-          className="space-y-6"
+          className="space-y-3"
         >
           <FormField
             control={form.control}
@@ -88,6 +93,20 @@ export default function SignInForm() {
                 <FormDescription>
                   This is your public display name.
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>password</FormLabel>
+                <FormControl>
+                  <Input placeholder="password" type="password" {...field} />
+                </FormControl>
+                <FormDescription>This is your secret key.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
