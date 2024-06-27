@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -88,6 +87,9 @@ export default function SignUpForm() {
 
   return (
     <>
+      <div className="flex items-center justify-center font-bold">
+        {'Hi bro,Welcome to register'}
+      </div>
       <Form {...form}>
         <form
           onSubmit={(e) => {
@@ -101,13 +103,11 @@ export default function SignUpForm() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>username</FormLabel>
+                <FormLabel>username:</FormLabel>
                 <FormControl>
                   <Input placeholder="username" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -118,11 +118,10 @@ export default function SignUpForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>password</FormLabel>
+                <FormLabel>password:</FormLabel>
                 <FormControl>
                   <Input placeholder="password" type="password" {...field} />
                 </FormControl>
-                <FormDescription>Please enter your password</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -133,7 +132,7 @@ export default function SignUpForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>confirmPassword</FormLabel>
+                <FormLabel>confirmPassword:</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="confirmPassword"
@@ -141,9 +140,6 @@ export default function SignUpForm() {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>
-                  Please enter your password again
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

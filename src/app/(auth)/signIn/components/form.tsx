@@ -8,16 +8,15 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import fetchWithUrl from '@/lib/fetchWithUrl';
-import { ToastAction } from '@/components/ui/toast';
 import Link from 'next/link';
 
 // type Props = {
@@ -73,6 +72,9 @@ export default function SignInForm() {
 
   return (
     <>
+      <div className="flex items-center justify-center font-bold">
+        {'Hi bro,Meet you again '}
+      </div>
       <Form {...form}>
         <form
           onSubmit={(e) => {
@@ -86,13 +88,10 @@ export default function SignInForm() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>username</FormLabel>
+                <FormLabel>username:</FormLabel>
                 <FormControl>
                   <Input placeholder="username" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -102,11 +101,10 @@ export default function SignInForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>password</FormLabel>
+                <FormLabel>password:</FormLabel>
                 <FormControl>
                   <Input placeholder="password" type="password" {...field} />
                 </FormControl>
-                <FormDescription>This is your secret key.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
