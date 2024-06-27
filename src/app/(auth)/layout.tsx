@@ -12,7 +12,7 @@ export default function AuthLayout({
   const segment = useSelectedLayoutSegment();
   return (
     <>
-      <Link href="/" className="float-right m-4">
+      <Link href="/" className="absolute right-7 top-2">
         <Button className="h-8">HOME</Button>
       </Link>
 
