@@ -1,4 +1,5 @@
 import { extend } from 'umi-request';
+import PubSub from 'pubsub-js';
 
 const request = extend({
   timeout: 5000,
@@ -22,5 +23,29 @@ const request = extend({
 //     ...config,
 //   };
 // });
+
+request.interceptors.response.use(async function (response) {
+  if (!response) {
+    PubSub?.publish?.('showError', 'server error please connect manage');
+    return Promise.reject('server error please connect manage');
+  }
+  const data = await response.clone().json();
+  if (response.status === 200) {
+    console.log(response, 'response');
+    // toast()
+    if (data.code == '200') {
+      return data.data;
+    } else {
+      PubSub?.publish?.('showError', data.data);
+      return Promise.reject(data.data);
+    }
+  } else {
+    PubSub.publish(
+      'showError',
+      data?.message || 'server error please connect manage',
+    );
+    return;
+  }
+});
 
 export default request;

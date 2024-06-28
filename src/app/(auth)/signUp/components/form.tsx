@@ -1,9 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { unstable_noStore as noStore } from 'next/cache';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { unstable_noStore as noStore } from 'next/cache';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -22,6 +22,7 @@ import request from '@/request';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { md5Hash } from '@/lib/utils';
 
 const FormSchema = z
   .object({
@@ -59,9 +60,10 @@ export default function SignUpForm() {
 
       const res = await request.post('/createUser', {
         credentials: 'include',
-        body: JSON.stringify({
+        data: {
           username: data.username,
-        }),
+          password: md5Hash(data.password),
+        },
       });
       console.log(res, 'res++++++');
       toast({
