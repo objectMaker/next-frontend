@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { unstable_noStore as noStore } from 'next/cache';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -19,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import Link from 'next/link';
 import request from '@/request';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { md5Hash } from '@/lib/utils';
 
 const FormSchema = z.object({
@@ -43,6 +43,20 @@ export default function SignInForm() {
       password: '',
     },
   });
+  const searchParams = useSearchParams();
+
+  const redirectUrl = searchParams.get('redirect');
+
+  useEffect(() => {
+    if (redirectUrl) {
+      toast({
+        variant: 'destructive',
+        title: 'warning',
+        description: `your token expired need to login`,
+      });
+      console.log('我也是尽力了');
+    }
+  }, [redirectUrl, toast]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {

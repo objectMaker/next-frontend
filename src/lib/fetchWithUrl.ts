@@ -10,6 +10,6 @@ export default async function fetchWithUrl<T extends object>(
   if (res.ok) {
     return await res.json();
   } else {
-    throw new Error(JSON.stringify(await res.json()));
+    return Promise.reject(res.json());
   }
 }
