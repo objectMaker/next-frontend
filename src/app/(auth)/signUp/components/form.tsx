@@ -16,13 +16,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import request from '@/request';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { md5Hash } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const FormSchema = z
   .object({
@@ -44,6 +44,7 @@ const FormSchema = z
 export default function SignUpForm() {
   noStore();
   const { toast } = useToast();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -68,9 +69,9 @@ export default function SignUpForm() {
       toast({
         variant: 'default',
         title: 'congratulation',
-        description: 'you are create a new user !',
-        action: <ToastAction altText="Try again">{data.username}</ToastAction>,
+        description: `you are create a new user,${data.username} !`,
       });
+      router.push('/signIn');
     } finally {
       setLoading(false);
     }
