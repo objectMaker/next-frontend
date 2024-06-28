@@ -20,6 +20,7 @@
     "js-md5": "^0.8.3",
     "lucide-react": "^0.396.0",
     "next": "14.2.4",
+    "pubsub-js": "^1.9.4",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pubsub-js": "^1.8.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@vercel/style-guide": "^5.0.1",

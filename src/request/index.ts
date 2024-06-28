@@ -1,11 +1,8 @@
-// import { redirect } from 'next/navigation';
 import { extend } from 'umi-request';
 
 const request = extend({
   timeout: 5000,
-  headers: {
-    'Content-type': 'multipart/form-data',
-  },
+  prefix: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
 // request.interceptors.request.use(function (url, config) {

@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { unstable_noStore as noStore } from 'next/cache';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,12 +16,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/components/ui/use-toast';
-import fetchWithUrl from '@/lib/fetchWithUrl';
 import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
+import request from '@/request';
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
 
 const FormSchema = z
   .object({
@@ -40,6 +41,7 @@ const FormSchema = z
   });
 
 export default function SignUpForm() {
+  noStore();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -54,32 +56,19 @@ export default function SignUpForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true);
-      await new Promise((res) => {
-        setTimeout(() => {
-          res(true);
-        }, 5000);
-      });
-      await fetchWithUrl('/createUser', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'default',
+
+      const res = await request.post('/createUser', {
+        credentials: 'include',
         body: JSON.stringify({
           username: data.username,
         }),
       });
+      console.log(res, 'res++++++');
       toast({
         variant: 'default',
         title: 'congratulation',
         description: 'you are create a new user !',
         action: <ToastAction altText="Try again">{data.username}</ToastAction>,
-      });
-      //   props.close();
-    } catch (err) {
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was a problem with your request.',
-        action: <ToastAction altText="Try again"></ToastAction>,
       });
     } finally {
       setLoading(false);
