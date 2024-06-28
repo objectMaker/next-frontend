@@ -58,14 +58,13 @@ export default function SignUpForm() {
     try {
       setLoading(true);
 
-      const res = await request.post('/createUser', {
+      await request.post('/createUser', {
         credentials: 'include',
         data: {
           username: data.username,
           password: md5Hash(data.password),
         },
       });
-      console.log(res, 'res++++++');
       toast({
         variant: 'default',
         title: 'congratulation',

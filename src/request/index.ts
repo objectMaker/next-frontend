@@ -31,7 +31,6 @@ request.interceptors.response.use(async function (response) {
   }
   const data = await response.clone().json();
   if (response.status === 200) {
-    console.log(response, 'response');
     // toast()
     if (data.code == '200') {
       return data.data;
