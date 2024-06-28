@@ -35,8 +35,8 @@ request.interceptors.response.use(async function (response) {
     if (data.code == '200') {
       return data.data;
     } else {
-      PubSub?.publish?.('showError', data.data);
-      return Promise.reject(data.data);
+      PubSub?.publish?.('showError', data.message);
+      return Promise.reject(data.message);
     }
   } else {
     PubSub.publish(
