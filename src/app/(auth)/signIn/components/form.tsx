@@ -3,6 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { unstable_noStore as noStore } from 'next/cache';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -14,14 +16,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-import fetchWithUrl from '@/lib/fetchWithUrl';
 import Link from 'next/link';
-
-// type Props = {
-//   close: () => void;
-// };
+import request from '@/request';
+import { useState } from 'react';
+import { md5Hash } from '@/lib/utils';
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -33,7 +32,10 @@ const FormSchema = z.object({
 });
 
 export default function SignInForm() {
+  noStore();
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -44,29 +46,24 @@ export default function SignInForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      await fetchWithUrl('/signIn', {
+      setLoading(true);
+      await request('/signIn', {
         method: 'POST',
         cache: 'default',
         credentials: 'include',
-        body: JSON.stringify({
-          username: data.username,
-          password: data.password,
-        }),
+        data: {
+          ...data,
+          password: md5Hash(data.password),
+        },
       });
       toast({
         variant: 'default',
         title: 'congratulation',
-        description: 'you are create a new user !',
-        action: <ToastAction altText="Try again">{data.username}</ToastAction>,
+        description: `you are sign in!${data.username}`,
       });
-      //   props.close();
-    } catch (err) {
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was a problem with your request.',
-        action: <ToastAction altText="Try again"></ToastAction>,
-      });
+      router.push('/');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -109,7 +106,7 @@ export default function SignInForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="h-8 w-full">
+          <Button disabled={loading} type="submit" className="h-8 w-full">
             SIGN IN
           </Button>
         </form>
