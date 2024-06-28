@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { unstable_noStore as noStore } from 'next/cache';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -15,11 +16,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
-import fetchWithUrl from '@/lib/fetchWithUrl';
-import { ToastAction } from '@/components/ui/toast';
+import request from '@/request';
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { md5Hash } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const FormSchema = z
   .object({
@@ -39,7 +41,9 @@ const FormSchema = z
   });
 
 export default function SignUpForm() {
+  noStore();
   const { toast } = useToast();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -53,33 +57,20 @@ export default function SignUpForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true);
-      await new Promise((res) => {
-        setTimeout(() => {
-          res(true);
-        }, 5000);
-      });
-      await fetchWithUrl('/createUser', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'default',
-        body: JSON.stringify({
+
+      await request.post('/createUser', {
+        credentials: 'include',
+        data: {
           username: data.username,
-        }),
+          password: md5Hash(data.password),
+        },
       });
       toast({
         variant: 'default',
         title: 'congratulation',
-        description: 'you are create a new user !',
-        action: <ToastAction altText="Try again">{data.username}</ToastAction>,
+        description: `you are create a new user,${data.username} !`,
       });
-      //   props.close();
-    } catch (err) {
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was a problem with your request.',
-        action: <ToastAction altText="Try again"></ToastAction>,
-      });
+      router.push('/signIn');
     } finally {
       setLoading(false);
     }
